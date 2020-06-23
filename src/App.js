@@ -1,11 +1,73 @@
 import React from 'react'
+import Header from './Header'
+import Folders from './Folders'
+import Notes from './Notes'
+import store from './dummy-store'
+import {Route} from 'react-router-dom'
 
 class App extends React.Component{
+  state = {
+    ...store,
+    currentFolder:null,
+    currentNote: null
+  }
+
+
+  //On Folder Click
+  handleFolderSelect = function (e) {
+    this.setState({
+      currentFolder:e.target.id,
+      currentNote:null
+    })
+  }
+
+  //On Note Click
+  handleNoteSelect = function (e) {
+    this.setState({currentNote:e.target.id})
+  }
+
+  //On Header Click
+  handleClickHeader= function(){
+    this.setState({currentNote:null, currentFolder:null})
+  }
+
+
+
   render(){
     return (
+
       <div className='App'>
-        hello
+        <Header handleClickHeader={()=>this.handleClickHeader()}/>
+        <main>
+          {/* Home Route */}
+          <Route exact 
+            path='/' 
+            render={() => <Folders handleFolderSelect={(e)=>this.handleFolderSelect(e)} folders={this.state.folders}/>}
+          />
+          
+
+          {/* Folder Route */}
+          <Route
+            exact
+            path='/folders/:folderId' 
+            render={() => <Folders currentFolder={this.state.currentFolder} handleFolderSelect={(e)=>this.handleFolderSelect(e)} folders={this.state.folders}/>} 
+          />
+
+          {/* Note Route */}
+          <Route
+            exact
+            path='/notes/:noteId' 
+            render={(routeProps) => <Folders {...routeProps} notes={this.state.notes} folders={this.state.folders} currentNote={this.state.currentNote} currentFolder={this.state.currentFolder} handleFolderSelect={(e)=>this.handleFolderSelect(e)} folders={this.state.folders}/>} 
+          />
+
+          <Route
+            path='/'
+            render={() => <Notes currentFolder={this.state.currentFolder} handleNoteSelect={(e)=>this.handleNoteSelect(e)} currentNote={this.state.currentNote} notes={this.state.notes}/>}
+          />
+          
+        </main>
       </div>
+
     )
   }
 }

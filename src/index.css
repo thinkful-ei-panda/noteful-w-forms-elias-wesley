@@ -11,3 +11,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.folders-container,.notes-container{
+  border: solid black 2px;
+}
+
+.highlighted-folder{
+  background-color: lightskyblue;
+}
+
+header{
+  text-align: center;
+}
+
+
+
+.folders-container{
+  flex:1;
+  display:flex;
+  flex-direction: column;
+}
+
+.notes-container{
+  flex:2
+}
+
+.folder-container,.highlighted-folder{
+  border:black solid 1px;
+  margin:5px;
+  text-align: center;
+  padding:15px;
+}
+
+main{
+  display:flex;
+  width:80%;
+  margin:auto;
+}
