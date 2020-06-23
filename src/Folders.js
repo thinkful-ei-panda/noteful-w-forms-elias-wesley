@@ -18,9 +18,8 @@ const Folders = function(props){
 
     }
 
-
-    const folder= props.folders.map((folder, index)=> {
-        return <Folder handleFolderSelect={(e)=>props.handleFolderSelect(e)} currentFolder={props.currentFolder} key={index} id={folder.id} name={folder.name}/>
+    const folder= props.folders.map((folder)=> {
+        return <Folder handleFolderSelect={props.handleFolderSelect} currentFolder={props.currentFolder} key={folder.id} id={folder.id} name={folder.name}/>
     })
 
     return (

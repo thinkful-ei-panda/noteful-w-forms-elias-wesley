@@ -12,8 +12,8 @@ const Notes = function(props){
         notes=notes.filter(note => note.id===props.currentNote);
     }
 
-    const note= notes.map((note,index) => {
-        return <Note currentNote={props.currentNote} handleNoteSelect={(e)=>props.handleNoteSelect(e)} key={index} note={note}/>
+    const note= notes.map((note) => {
+        return <Note currentNote={props.currentNote} handleNoteSelect={props.handleNoteSelect} key={note.id} note={note}/>
     })
 
 

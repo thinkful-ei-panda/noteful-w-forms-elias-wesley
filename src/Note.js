@@ -5,7 +5,6 @@ const Note = function (props){
 
     const link=`/notes/${props.note.id}`
     if(props.currentNote===props.note.id){    
-        console.log(props.note.content)
         return(
             <>
                 <div onClick={(e)=>props.handleNoteSelect(e)} id={props.note.id} className='note'>

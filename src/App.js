@@ -14,7 +14,7 @@ class App extends React.Component{
 
 
   //On Folder Click
-  handleFolderSelect = function (e) {
+  handleFolderSelect = (e) => {
     this.setState({
       currentFolder:e.target.id,
       currentNote:null
@@ -22,12 +22,12 @@ class App extends React.Component{
   }
 
   //On Note Click
-  handleNoteSelect = function (e) {
+  handleNoteSelect = (e) => {
     this.setState({currentNote:e.target.id})
   }
 
   //On Header Click
-  handleClickHeader= function(){
+  handleClickHeader= () => {
     this.setState({currentNote:null, currentFolder:null})
   }
 
@@ -37,12 +37,12 @@ class App extends React.Component{
     return (
 
       <div className='App'>
-        <Header handleClickHeader={()=>this.handleClickHeader()}/>
+        <Header handleClickHeader={this.handleClickHeader}/>
         <main>
           {/* Home Route */}
           <Route exact 
             path='/' 
-            render={() => <Folders handleFolderSelect={(e)=>this.handleFolderSelect(e)} folders={this.state.folders}/>}
+            render={() => <Folders handleFolderSelect={this.handleFolderSelect} folders={this.state.folders}/>}
           />
           
 
@@ -50,19 +50,19 @@ class App extends React.Component{
           <Route
             exact
             path='/folders/:folderId' 
-            render={() => <Folders currentFolder={this.state.currentFolder} handleFolderSelect={(e)=>this.handleFolderSelect(e)} folders={this.state.folders}/>} 
+            render={() => <Folders currentFolder={this.state.currentFolder} handleFolderSelect={this.handleFolderSelect} folders={this.state.folders}/>} 
           />
 
           {/* Note Route */}
           <Route
             exact
             path='/notes/:noteId' 
-            render={(routeProps) => <Folders {...routeProps} notes={this.state.notes} folders={this.state.folders} currentNote={this.state.currentNote} currentFolder={this.state.currentFolder} handleFolderSelect={(e)=>this.handleFolderSelect(e)} folders={this.state.folders}/>} 
+            render={(routeProps) => <Folders {...routeProps} notes={this.state.notes} folders={this.state.folders} currentNote={this.state.currentNote} currentFolder={this.state.currentFolder} handleFolderSelect={this.handleFolderSelect} />} 
           />
 
           <Route
             path='/'
-            render={() => <Notes currentFolder={this.state.currentFolder} handleNoteSelect={(e)=>this.handleNoteSelect(e)} currentNote={this.state.currentNote} notes={this.state.notes}/>}
+            render={() => <Notes currentFolder={this.state.currentFolder} handleNoteSelect={this.handleNoteSelect} currentNote={this.state.currentNote} notes={this.state.notes}/>}
           />
           
         </main>
