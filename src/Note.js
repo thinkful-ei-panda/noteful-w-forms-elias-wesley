@@ -7,7 +7,7 @@ class Note extends React.Component{
 
 
     render(){
-        const {currentNote,currentFolder,notes,folders}=this.context
+        const {currentNote}=this.context
 
         if(currentNote===this.props.note.id){    
             return(

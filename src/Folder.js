@@ -6,7 +6,7 @@ class Folder extends React.Component{
     static contextType=AppContext;
 
     render(){
-        const {folders, notes, currentFolder,currentNote}=this.context;
+        const {currentFolder}=this.context;
 
         if(currentFolder===this.props.id){
                 

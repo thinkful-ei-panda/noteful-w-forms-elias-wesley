@@ -2,15 +2,28 @@ import React from 'react'
 import Header from './Header'
 import Folders from './Folders'
 import Notes from './Notes'
-import store from './dummy-store'
 import {Route, withRouter} from 'react-router-dom'
 import AppContext from './AppContext'
 
 class App extends React.Component{
   state = {
-    ...store,
     currentFolder:null,
-    currentNote: null
+    currentNote:null,
+    folders: [],
+    notes: []
+  }
+
+  componentDidMount(){
+    fetch(`http://localhost:9090/db`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      this.setState({
+        ...data,
+        currentFolder:null,
+        currentNote: null
+      })
+    })
   }
 
   //On Folder Click

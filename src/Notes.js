@@ -6,7 +6,7 @@ class Notes extends React.Component{
     static contextType=AppContext;
 
     render(){
-        const {notes, folders,currentFolder,currentNote} = this.context;
+        const {notes,currentFolder,currentNote} = this.context;
 
         let renderNotes=notes;
 
