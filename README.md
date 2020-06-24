@@ -1,3 +1,7 @@
+Noteful w/ Context and Api and Delete functionality
+
+Chatchawan L Suwaratana and Wesley Rou
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
