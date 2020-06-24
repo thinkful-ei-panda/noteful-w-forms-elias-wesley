@@ -1,28 +1,35 @@
 import React from 'react'
 import Note from './Note'
+import AppContext from './AppContext';
 
-const Notes = function(props){
+class Notes extends React.Component{
+    static contextType=AppContext;
 
-    let notes=props.notes
-    if(props.currentFolder){
-        notes=notes.filter(note => note.folderId===props.currentFolder);
+    render(){
+        const {notes, folders,currentFolder,currentNote} = this.context;
+
+        let renderNotes=notes;
+
+        if(currentFolder){
+            renderNotes=renderNotes.filter(note => note.folderId===currentFolder);
+        }
+
+        if(currentNote){
+            renderNotes=renderNotes.filter(note => note.id===currentNote);
+        }
+
+        const note= renderNotes.map((note) => {
+            return <Note currentNote={currentNote} handleNoteSelect={this.props.handleNoteSelect} key={note.id} note={note}/>
+        })
+
+
+        return (
+            <div className='notes-container'>
+                {note}
+                <button type='button'>Add note</button>
+            </div>
+        )
     }
-
-    if(props.currentNote){
-        notes=notes.filter(note => note.id===props.currentNote);
-    }
-
-    const note= notes.map((note) => {
-        return <Note currentNote={props.currentNote} handleNoteSelect={props.handleNoteSelect} key={note.id} note={note}/>
-    })
-
-
-    return (
-        <div className='notes-container'>
-            {note}
-            <button type='button'>Add note</button>
-        </div>
-    )
 }
 
 export default Notes

@@ -1,21 +1,30 @@
 import React from 'react'
+import AppContext from './AppContext'
+import { render } from '@testing-library/react';
 
-const Folder = function(props){
-    if(props.currentFolder===props.id){
-        return (
-            <div onClick={(e)=>props.handleFolderSelect(e)} id={props.id} className='highlighted-folder'>
-                {props.name}
-            </div>
-    )
+class Folder extends React.Component{
+    static contextType=AppContext;
 
-    }else{
-        return (
-                <div className='folder-container'>
-                        <div onClick={(e)=>props.handleFolderSelect(e)} id={props.id} className='folder'>
-                            {props.name}
-                        </div>           
-                </div>
+    render(){
+        const {folders, notes, currentFolder,currentNote}=this.context;
+
+        if(currentFolder===this.props.id){
+                
+                return (
+                    <div onClick={(e)=>this.props.handleFolderSelect(e)} id={this.props.id} className='highlighted-folder'>
+                        {this.props.name}
+                    </div>
         )
+
+        }else{
+            return (
+                    <div className='folder-container'>
+                            <div onClick={(e)=>this.props.handleFolderSelect(e)} id={this.props.id} className='folder'>
+                                {this.props.name}
+                            </div>           
+                    </div>
+            )
+        }
     }
 }
 
