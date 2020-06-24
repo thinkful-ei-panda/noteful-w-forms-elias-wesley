@@ -3,7 +3,7 @@ import Header from './Header'
 import Folders from './Folders'
 import Notes from './Notes'
 import store from './dummy-store'
-import {Route} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom'
 
 class App extends React.Component{
   state = {
@@ -19,23 +19,29 @@ class App extends React.Component{
       currentFolder:e.target.id,
       currentNote:null
     })
+    this.props.history.push(`/folders/${e.target.id}`)
   }
 
   //On Note Click
   handleNoteSelect = (e) => {
-    this.setState({currentNote:e.target.id})
+    this.setState({currentNote:e.currentTarget.id})
+    this.props.history.push(`/notes/${e.currentTarget.id}`)
   }
 
   //On Header Click
   handleClickHeader= () => {
     this.setState({currentNote:null, currentFolder:null})
+    this.props.history.push(`/`)
   }
 
-
+  //On Back Click
+  handleBackClick= () =>{
+    this.setState({currentNote:null})
+    this.props.history.goBack()
+  }
 
   render(){
     return (
-
       <div className='App'>
         <Header handleClickHeader={this.handleClickHeader}/>
         <main>
@@ -57,7 +63,7 @@ class App extends React.Component{
           <Route
             exact
             path='/notes/:noteId' 
-            render={(routeProps) => <Folders {...routeProps} notes={this.state.notes} folders={this.state.folders} currentNote={this.state.currentNote} currentFolder={this.state.currentFolder} handleFolderSelect={this.handleFolderSelect} />} 
+            render={(routeProps) => <Folders {...routeProps} handleBackClick={this.handleBackClick} notes={this.state.notes} folders={this.state.folders} currentNote={this.state.currentNote} currentFolder={this.state.currentFolder} handleFolderSelect={this.handleFolderSelect} />} 
           />
 
           <Route
@@ -72,4 +78,4 @@ class App extends React.Component{
   }
 }
 
-export default App
+export default withRouter(App)

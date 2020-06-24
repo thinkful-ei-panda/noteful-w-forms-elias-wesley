@@ -10,7 +10,7 @@ const Folders = function(props){
         return(
             <div className='folders-container'>
                 
-                <button onClick={() => props.history.goBack()} type='button'>Back</button>
+                <button onClick={() => props.handleBackClick()} type='button'>Back</button>
                 {noteBelongsToFolder.name}
                 
             </div>
