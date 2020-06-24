@@ -1,11 +1,16 @@
 import React from 'react'
+import AppContext from './AppContext'
 
-const Header = function (props){
-    return (
-        <header onClick={()=>props.handleClickHeader()}>
-            <h1>Noteful</h1>
-        </header>
-    )
+class Header extends React.Component{
+    static contextType=AppContext
+    render(){
+        const {handleClickHeader} = this.context
+        return (
+            <header onClick={()=>handleClickHeader()}>
+                <h1>Noteful</h1>
+            </header>
+        )
+    }
 }
 
 export default Header

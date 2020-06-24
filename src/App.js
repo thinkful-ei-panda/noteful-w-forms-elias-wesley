@@ -53,17 +53,39 @@ class App extends React.Component{
     this.props.history.goBack()
   }
 
+  //On Delete Click
+  handleDeleteClick = (e) =>{
+    e.stopPropagation();
+    const noteId=e.target.id;
+    fetch(`http://localhost:9090/notes/${e.target.id}`,{
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(response=>response.json())
+    .then(()=>{
+      const newNotes=this.state.notes.filter(note => note.id !== noteId)
+      console.log(newNotes);
+
+      this.setState({
+        notes: newNotes,
+        currentNote:null,
+      }, ()=> this.props.history.goBack())
+    })
+  }
+
   render(){
     return (
       <AppContext.Provider value={{
         folders:this.state.folders,
         notes:this.state.notes,
         currentFolder:this.state.currentFolder,
-        currentNote:this.state.currentNote
+        currentNote:this.state.currentNote,
+        handleClickHeader: this.handleClickHeader,
+        handleDeleteClick: this.handleDeleteClick
       }} >
 
         <div className='App'>
-          <Header handleClickHeader={this.handleClickHeader}/>
+          <Header />
           <main>
             {/* Home Route */}
             <Route exact 
