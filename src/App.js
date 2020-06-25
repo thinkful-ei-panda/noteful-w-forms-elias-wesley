@@ -88,30 +88,69 @@ class App extends React.Component{
     })
   }
 
+  //Add Folder Button
   handleAddFolder= (e) =>{
     this.props.history.push('/addfolder')
-
-
   }
 
+  //Add Note Button
   handleAddNote = (e) => {
     this.props.history.push('/addnote')
   }
 
+  //Submit New Note
   handleAddNoteSubmit = (e) => {
-    console.log(e.target)
     e.preventDefault();
-    console.log(e.target.name.value)
-    const {name, content, folderName} = this.state.noteFields;
-    console.log('Name: ', name.value);
-    console.log('Name: ', content.value);
-    console.log('Name: ', folderName.value);
+    const {name, content} = this.state.noteFields;
+    const {id}=this.state.folders.find(folder => folder.name===this.state.noteFields.folderName.value)
+    const newNote={
+      name:name.value,
+      content:content.value,
+      folderId:id
+      };
+    fetch('http://localhost:9090/notes',{
+      method:'POST',
+      headers: {'Content-Type': 'application/json'},
+      body:JSON.stringify(newNote)
+    })
+      .then(response => response.json())
+      .then((result)=> {
+        let newNotes=this.state.notes;
+        newNotes.push(result);
+        this.setState({notes:newNotes})
+      }
+    )
+    this.props.history.goBack();
   }
 
-  handleUpdateNoteFields = (fieldValues) => {
-    console.log('updated...')
-    this.setState({noteNameValue: {name: {value: fieldValues.name}}})
-    this.setState({noteNameValue: {name: {value: fieldValues.name, touched: true}}});
+  //Handle formfield on change
+  handleUpdateNoteFields = (e) => {
+    console.log(e.target.id);
+    let newNoteFields=this.state.noteFields
+    newNoteFields[e.target.id].value=e.target.value;
+    newNoteFields[e.target.id].touched=true;
+
+    this.setState({noteFields: newNoteFields});     
+  }
+
+  //Handle Submit New Folder
+  handleFolderSubmit = (e) => {
+    e.preventDefault();
+    const newFolder= {name: e.target.folderName.value}
+    fetch('http://localhost:9090/folders',{
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(newFolder)
+    })
+    .then(response => response.json())
+    .then((result) => {
+      console.log(result)
+      let newFolders=this.state.folders
+      newFolders.push(result)
+      this.setState({folders:newFolders})
+    })
+    this.props.history.goBack();
+
   }
 
   render(){
@@ -127,7 +166,8 @@ class App extends React.Component{
         handleAddNote: this.handleAddNote,
         handleAddNoteSubmit: this.handleAddNoteSubmit,
         handleUpdateNoteFields: this.handleUpdateNoteFields,
-        noteNameValue: this.state.noteNameValue
+        noteFields: this.state.noteFields,
+        handleFolderSubmit:this.handleFolderSubmit
       }} >
 
         <div className='App'>
