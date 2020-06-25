@@ -6,6 +6,7 @@ import {Route, withRouter} from 'react-router-dom'
 import AppContext from './AppContext'
 import AddFolder from './AddFolder'
 import AddNote from './AddNote'
+import ErrorBoundary from './ErrorBoundary';
 
 class App extends React.Component{
   state = {
@@ -26,7 +27,8 @@ class App extends React.Component{
         value: '',
         touched: false,
       }
-    }
+    },
+    folderField: {value:'', touched:false}
   }
 
   componentDidMount(){
@@ -153,6 +155,15 @@ class App extends React.Component{
 
   }
 
+  //handle Folder form  field change
+  handleFolderFormOnChange = (e) => {
+    console.log(e.target.value)
+    let newFolderField = this.state.folderField;
+    newFolderField.value=e.target.value;
+    newFolderField.touched=true;
+    this.setState({folderField: newFolderField});
+  }
+
   render(){
     return (
       <AppContext.Provider value={{
@@ -167,10 +178,13 @@ class App extends React.Component{
         handleAddNoteSubmit: this.handleAddNoteSubmit,
         handleUpdateNoteFields: this.handleUpdateNoteFields,
         noteFields: this.state.noteFields,
-        handleFolderSubmit:this.handleFolderSubmit
+        handleFolderSubmit:this.handleFolderSubmit,
+        handleFolderFormOnChange:this.handleFolderFormOnChange,
+        folderField: this.state.folderField
       }} >
 
         <div className='App'>
+          <ErrorBoundary>
           <Header />
           <main>
             {/* Home Route */}
@@ -226,6 +240,7 @@ class App extends React.Component{
           
             
           </main>
+          </ErrorBoundary>
         </div>
 
       </AppContext.Provider>

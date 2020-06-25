@@ -28,27 +28,37 @@ class AddNote extends React.Component {
             )
         })
 
-        let options=folders.map(folder => {
+        let options=folders.map((folder,i) => {
             return (
-                <option value={folder.name}>{folder.name}</option>
+                <option key={i} value={folder.name}>{folder.name}</option>
             )
         })
+
+        let disabled = false;
+        if (validation.length !== 0 || noteFields.name.touched === false) {
+            disabled = true
+        }
         
         return (
             <div>
                 <form onSubmit={e=>handleAddNoteSubmit(e)}>
                     <legend></legend>
                     <fieldset>
-                        <input name='name' id='name' onChange={e=>handleUpdateNoteFields(e)}></input>
-                        <label htmlFor='name'> This is for the name</label>
-                        <input id='content' onChange={e=>handleUpdateNoteFields(e)}></input>
-                        <label>This is for the content</label>
-                        {/* <input id='folderName' onChange={e=>handleUpdateNoteFields(e)}></input> */}
-                        <select id='folderName' onChange={e=>handleUpdateNoteFields(e)}>
-                            {options}
-                        </select>
-                        <label>This is for the folder</label>
-                        <button type='submit'>Save</button>
+                        <div>
+                            <label htmlFor='name'>Note name:  </label>
+                            <input name='name' id='name' onChange={e=>handleUpdateNoteFields(e)}></input>
+                        </div>
+                        <div>
+                            <label>Write your note here:  </label>
+                            <input id='content' onChange={e=>handleUpdateNoteFields(e)}></input>
+                        </div>
+                        <div>
+                            <label>Choose a folder:  </label>
+                            <select id='folderName' onChange={e=>handleUpdateNoteFields(e)}>
+                                {options}
+                            </select>
+                        </div>
+                        <button type='submit' disabled = {disabled}>Save</button>
                     </fieldset>
                 </form>
 
