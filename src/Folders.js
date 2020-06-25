@@ -6,7 +6,7 @@ class Folders extends React.Component{
     static contextType=AppContext;  
 
     render(){
-        const {folders, notes, currentNote}=this.context;
+        const {folders, notes, currentNote,handleAddFolder}=this.context;
 
         if(currentNote){
 
@@ -31,7 +31,7 @@ class Folders extends React.Component{
         return (
             <div className='folders-container'>
                 {folder}
-                <button type='button'>Add Folder</button>
+                <button onClick={(e)=>handleAddFolder(e)} type='button'>Add Folder</button>
             </div>
         )
     }

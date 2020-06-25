@@ -4,6 +4,8 @@ import Folders from './Folders'
 import Notes from './Notes'
 import {Route, withRouter} from 'react-router-dom'
 import AppContext from './AppContext'
+import AddFolder from './AddFolder'
+import AddNote from './AddNote'
 
 class App extends React.Component{
   state = {
@@ -17,7 +19,6 @@ class App extends React.Component{
     fetch(`http://localhost:9090/db`)
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       this.setState({
         ...data,
         currentFolder:null,
@@ -73,6 +74,16 @@ class App extends React.Component{
     })
   }
 
+  handleAddFolder= (e) =>{
+    this.props.history.push('/addfolder')
+
+
+  }
+
+  handleAddNote = (e) => {
+    this.props.history.push('/addnote')
+  }
+
   render(){
     return (
       <AppContext.Provider value={{
@@ -81,7 +92,9 @@ class App extends React.Component{
         currentFolder:this.state.currentFolder,
         currentNote:this.state.currentNote,
         handleClickHeader: this.handleClickHeader,
-        handleDeleteClick: this.handleDeleteClick
+        handleDeleteClick: this.handleDeleteClick,
+        handleAddFolder: this.handleAddFolder,
+        handleAddNote: this.handleAddNote
       }} >
 
         <div className='App'>
@@ -92,6 +105,12 @@ class App extends React.Component{
               path='/' 
               render={() => <Folders handleFolderSelect={this.handleFolderSelect}/>}
             />
+
+            <Route
+              exact
+              path='/'
+              render={() => <Notes currentFolder={this.state.currentFolder} handleNoteSelect={this.handleNoteSelect} currentNote={this.state.currentNote} notes={this.state.notes}/>}
+            />
             
 
             {/* Folder Route */}
@@ -99,6 +118,11 @@ class App extends React.Component{
               exact
               path='/folders/:folderId' 
               render={() => <Folders currentFolder={this.state.currentFolder} handleFolderSelect={this.handleFolderSelect}/>} 
+            />
+
+            <Route
+              path='/folders/:folderId'
+              render={() => <Notes currentFolder={this.state.currentFolder} handleNoteSelect={this.handleNoteSelect} currentNote={this.state.currentNote} notes={this.state.notes}/>}
             />
 
             {/* Note Route */}
@@ -109,9 +133,24 @@ class App extends React.Component{
             />
 
             <Route
-              path='/'
+              exact
+              path='/notes/:noteId'
               render={() => <Notes currentFolder={this.state.currentFolder} handleNoteSelect={this.handleNoteSelect} currentNote={this.state.currentNote} notes={this.state.notes}/>}
             />
+
+            {/* Add Folder Route */}
+            <Route
+              path='/addfolder'
+              render={() => <AddFolder />}
+            />
+
+            {/* Add Note Route */}
+            <Route
+              path='/addnote'
+              render={() => <AddNote />}
+            />
+
+          
             
           </main>
         </div>
