@@ -12,7 +12,21 @@ class App extends React.Component{
     currentFolder:null,
     currentNote:null,
     folders: [],
-    notes: []
+    notes: [],
+    noteFields: {
+      name: {
+        value: '',
+        touched: false,
+      },
+      content: {
+        value: '',
+        touched: false,
+      },
+      folderName: {
+        value: '',
+        touched: false,
+      }
+    }
   }
 
   componentDidMount(){
@@ -84,6 +98,22 @@ class App extends React.Component{
     this.props.history.push('/addnote')
   }
 
+  handleAddNoteSubmit = (e) => {
+    console.log(e.target)
+    e.preventDefault();
+    console.log(e.target.name.value)
+    const {name, content, folderName} = this.state.noteFields;
+    console.log('Name: ', name.value);
+    console.log('Name: ', content.value);
+    console.log('Name: ', folderName.value);
+  }
+
+  handleUpdateNoteFields = (fieldValues) => {
+    console.log('updated...')
+    this.setState({noteNameValue: {name: {value: fieldValues.name}}})
+    this.setState({noteNameValue: {name: {value: fieldValues.name, touched: true}}});
+  }
+
   render(){
     return (
       <AppContext.Provider value={{
@@ -94,7 +124,10 @@ class App extends React.Component{
         handleClickHeader: this.handleClickHeader,
         handleDeleteClick: this.handleDeleteClick,
         handleAddFolder: this.handleAddFolder,
-        handleAddNote: this.handleAddNote
+        handleAddNote: this.handleAddNote,
+        handleAddNoteSubmit: this.handleAddNoteSubmit,
+        handleUpdateNoteFields: this.handleUpdateNoteFields,
+        noteNameValue: this.state.noteNameValue
       }} >
 
         <div className='App'>
