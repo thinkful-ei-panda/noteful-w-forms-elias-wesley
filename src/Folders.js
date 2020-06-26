@@ -1,6 +1,7 @@
 import React from 'react'
 import Folder from './Folder'
 import AppContext from './AppContext'
+import PropTypes from 'prop-types'
 
 class Folders extends React.Component{  
     static contextType=AppContext;  
@@ -35,6 +36,18 @@ class Folders extends React.Component{
             </div>
         )
     }
+}
+
+Folders.propTypes ={
+    handleFolderSelect: PropTypes.func.isRequired,
+    handleBackClick: PropTypes.func.isRequired    
+}
+
+Folders.childContextTypes ={
+    handleAddFolder: PropTypes.func.isRequired,
+    folders: PropTypes.array.isRequired,
+    notes: PropTypes.array.isRequired,
+    currentNote: PropTypes.string.isRequired
 }
 
 export default Folders

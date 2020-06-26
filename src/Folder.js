@@ -1,6 +1,6 @@
 import React from 'react'
 import AppContext from './AppContext'
-import { render } from '@testing-library/react';
+import PropTypes from 'prop-types'
 
 class Folder extends React.Component{
     static contextType=AppContext;
@@ -26,6 +26,16 @@ class Folder extends React.Component{
             )
         }
     }
+}
+
+Folder.childContextType ={
+    currentFolder: PropTypes.string.isRequired
+}
+
+Folder.propTypes ={
+    id: PropTypes.string.isRequired,
+    handleFolderSelect: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired
 }
 
 export default Folder

@@ -1,5 +1,6 @@
 import React from 'react'
 import AppContext from './AppContext'
+import PropTypes from 'prop-types'
 
 class AddFolder extends React.Component{
     static contextType=AppContext
@@ -36,6 +37,13 @@ class AddFolder extends React.Component{
             </div>
         )
     }
+}
+
+AddFolder.childContextType = {
+    handleFolderSubmit: PropTypes.func.isRequired, 
+    handleFolderFormOnChange: PropTypes.func.isRequired, 
+    folderField: PropTypes.object.isRequired
+
 }
 
 export default AddFolder

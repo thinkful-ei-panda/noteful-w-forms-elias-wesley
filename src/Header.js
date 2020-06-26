@@ -1,5 +1,6 @@
 import React from 'react'
 import AppContext from './AppContext'
+import PropTypes from 'prop-types'
 
 class Header extends React.Component{
     static contextType=AppContext
@@ -11,6 +12,10 @@ class Header extends React.Component{
             </header>
         )
     }
+}
+
+Header.childContextType={
+    handleClickHeader: PropTypes.func.isRequired
 }
 
 export default Header

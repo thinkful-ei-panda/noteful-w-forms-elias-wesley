@@ -1,5 +1,6 @@
 import React from 'react'
 import AppContext from './AppContext'
+import PropTypes from 'prop-types'
 
 class AddNote extends React.Component {
 
@@ -68,6 +69,13 @@ class AddNote extends React.Component {
             </div>
         )
     }
+}
+
+AddNote.childContextType = {
+    handleAddNoteSubmit: PropTypes.func.isRequired, 
+    handleUpdateNoteFields: PropTypes.func.isRequired, 
+    noteFields: PropTypes.object.isRequired,
+    folders: PropTypes.array.isRequired
 }
 
 export default AddNote

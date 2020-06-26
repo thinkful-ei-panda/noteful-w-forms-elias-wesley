@@ -1,6 +1,7 @@
 import React from 'react'
 import Note from './Note'
 import AppContext from './AppContext';
+import PropTypes from 'prop-types';
 
 class Notes extends React.Component{
     static contextType=AppContext;
@@ -31,5 +32,19 @@ class Notes extends React.Component{
         )
     }
 }
+
+Notes.childContextType = {
+    handleAddNote: PropTypes.func.isRequired,
+    currentNote: PropTypes.string.isRequired,
+    currentFolder: PropTypes.string.isRequired,
+    notes: PropTypes.object
+}
+
+Notes.propTypes = {
+    handleNoteSelect: PropTypes.func.isRequired
+}
+
+
+
 
 export default Notes
