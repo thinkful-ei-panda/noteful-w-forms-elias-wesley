@@ -1,3 +1,7 @@
+Noteful w/ Error Boundaries, PropTypes, and Add Folder Add Note functionality
+
+Elias Martinez and Wesley Rou
+
 Noteful w/ Context and Api and Delete functionality
 
 Chatchawan L Suwaratana and Wesley Rou
