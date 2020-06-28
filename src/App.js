@@ -6,7 +6,7 @@ import {Route, withRouter} from 'react-router-dom'
 import AppContext from './AppContext'
 import AddFolder from './AddFolder'
 import AddNote from './AddNote'
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary'
 
 class App extends React.Component{
   state = {
