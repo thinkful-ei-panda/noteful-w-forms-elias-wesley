@@ -28,17 +28,20 @@ class App extends React.Component{
         touched: false,
       }
     },
-    folderField: {value:'', touched:false}
+    folderField: {value:'', touched:false},
+    loading:false
   }
 
   componentDidMount(){
+    this.setState({loading:true})
     fetch(`http://localhost:9090/db`)
     .then(response => response.json())
     .then(data => {
       this.setState({
         ...data,
         currentFolder:null,
-        currentNote: null
+        currentNote: null,
+        loading:false
       })
     })
   }
@@ -74,18 +77,26 @@ class App extends React.Component{
   handleDeleteClick = (e) =>{
     e.stopPropagation();
     const noteId=e.target.id;
+    this.setState({
+      loading:true
+    })
     fetch(`http://localhost:9090/notes/${e.target.id}`,{
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'}
     })
     .then(response=>response.json())
     .then(()=>{
-      const newNotes=this.state.notes.filter(note => note.id !== noteId)
-      console.log(newNotes);
+
+      let newNotes=this.state.notes
+
+      //need != instead of !== because if the server has all its items deleted it starts making items with ids equal to integers instead of strings
+      newNotes=newNotes.filter(note => note.id != noteId)
+      
 
       this.setState({
         notes: newNotes,
         currentNote:null,
+        loading:false
       }, ()=> this.props.history.goBack())
     })
   }
@@ -104,12 +115,15 @@ class App extends React.Component{
   handleAddNoteSubmit = (e) => {
     e.preventDefault();
     const {name, content} = this.state.noteFields;
-    const {id}=this.state.folders.find(folder => folder.name===this.state.noteFields.folderName.value)
+    const id=e.target.closest('form').folderName.value;
+    const date = new Date(Date.now());
     const newNote={
       name:name.value,
       content:content.value,
-      folderId:id
-      };
+      folderId:id,
+      modified:date.toISOString()
+    };
+    this.setState({loading:true})
     fetch('http://localhost:9090/notes',{
       method:'POST',
       headers: {'Content-Type': 'application/json'},
@@ -119,7 +133,7 @@ class App extends React.Component{
       .then((result)=> {
         let newNotes=this.state.notes;
         newNotes.push(result);
-        this.setState({notes:newNotes})
+        this.setState({notes:newNotes,loading:false})
       }
     )
     this.props.history.goBack();
@@ -127,7 +141,6 @@ class App extends React.Component{
 
   //Handle formfield on change
   handleUpdateNoteFields = (e) => {
-    console.log(e.target.id);
     let newNoteFields=this.state.noteFields
     newNoteFields[e.target.id].value=e.target.value;
     newNoteFields[e.target.id].touched=true;
@@ -146,7 +159,6 @@ class App extends React.Component{
     })
     .then(response => response.json())
     .then((result) => {
-      console.log(result)
       let newFolders=this.state.folders
       newFolders.push(result)
       this.setState({folders:newFolders})
@@ -157,7 +169,6 @@ class App extends React.Component{
 
   //handle Folder form  field change
   handleFolderFormOnChange = (e) => {
-    console.log(e.target.value)
     let newFolderField = this.state.folderField;
     newFolderField.value=e.target.value;
     newFolderField.touched=true;
@@ -180,7 +191,8 @@ class App extends React.Component{
         noteFields: this.state.noteFields,
         handleFolderSubmit:this.handleFolderSubmit,
         handleFolderFormOnChange:this.handleFolderFormOnChange,
-        folderField: this.state.folderField
+        folderField: this.state.folderField,
+        loading:this.state.loading
       }} >
 
         <div className='App'>

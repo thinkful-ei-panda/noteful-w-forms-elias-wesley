@@ -7,7 +7,7 @@ class AddNote extends React.Component {
     static contextType=AppContext;
 
     render () {
-        const {handleAddNoteSubmit, handleUpdateNoteFields, noteFields,folders} = this.context;
+        const {handleAddNoteSubmit, handleUpdateNoteFields, noteFields,folders,currentFolder,loading} = this.context;
         let validation=[];
         
         
@@ -15,9 +15,7 @@ class AddNote extends React.Component {
             validation.push('Name is required');
         }
 
-        // console.log(folders.find(folder => folder.name===noteFields.folderName.value));
-
-        if(noteFields.folderName.touched===true && folders.find(folder => folder.name===noteFields.folderName.value)===undefined){
+        if(noteFields.folderName.touched===true && folders.find(folder => folder.id===noteFields.folderName.value)===undefined){
             validation.push('Choose an already existing folder (casing matters)');
         }
 
@@ -30,13 +28,26 @@ class AddNote extends React.Component {
         })
 
         let options=folders.map((folder,i) => {
+            let option
+            let currentFolderId
+            if(currentFolder){
+                currentFolderId=folders.find((folder) => folder.id === currentFolder).id
+                if(folder.id===currentFolderId){
+                    option=<option selected='selected' key={i} value={folder.id}>{folder.name}</option>
+                }else{
+                    option=<option key={i} value={folder.id}>{folder.name}</option>
+                }
+            } else{
+                option=<option key={i} value={folder.id}>{folder.name}</option>
+            }
+            
             return (
-                <option key={i} value={folder.name}>{folder.name}</option>
+                option                
             )
         })
 
         let disabled = false;
-        if (validation.length !== 0 || noteFields.name.touched === false) {
+        if (validation.length !== 0 || noteFields.name.touched === false || loading===true) {
             disabled = true
         }
         

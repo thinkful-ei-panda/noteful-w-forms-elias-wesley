@@ -14,7 +14,6 @@ class AddFolder extends React.Component{
         if (folderField.value.length === 0 && folderField.touched===true) {
             validation = 'Name is required';
         }
-        console.log(validation, folderField)
 
         let disabled=false
         if (validation.length !== 0 || folderField.touched===false) {

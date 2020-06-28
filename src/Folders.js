@@ -39,8 +39,8 @@ class Folders extends React.Component{
 }
 
 Folders.propTypes ={
-    handleFolderSelect: PropTypes.func.isRequired,
-    handleBackClick: PropTypes.func.isRequired    
+    handleFolderSelect: PropTypes.func,
+    handleBackClick: PropTypes.func    
 }
 
 Folders.childContextTypes ={
