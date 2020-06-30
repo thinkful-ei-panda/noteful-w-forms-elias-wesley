@@ -14,15 +14,14 @@ class Folder extends React.Component{
                     <div onClick={(e)=>this.props.handleFolderSelect(e)} id={this.props.id} className='highlighted-folder'>
                         {this.props.name}
                     </div>
-        )
-
+            )
         }else{
             return (
-                    <div className='folder-container'>
-                            <div onClick={(e)=>this.props.handleFolderSelect(e)} id={this.props.id} className='folder'>
-                                {this.props.name}
-                            </div>           
-                    </div>
+                <div className='folder-container'>
+                        <div onClick={(e)=>this.props.handleFolderSelect(e)} id={this.props.id} className='folder'>
+                            {this.props.name}
+                        </div>           
+                </div>
             )
         }
     }

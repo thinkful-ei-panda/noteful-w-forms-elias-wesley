@@ -43,11 +43,11 @@ Folders.propTypes ={
     handleBackClick: PropTypes.func    
 }
 
-Folders.childContextTypes ={
-    handleAddFolder: PropTypes.func.isRequired,
-    folders: PropTypes.array.isRequired,
-    notes: PropTypes.array.isRequired,
-    currentNote: PropTypes.string.isRequired
-}
+// Folders.childContextTypes ={
+//     handleAddFolder: PropTypes.func,
+//     folders: PropTypes.array.isRequired,
+//     notes: PropTypes.array.isRequired,
+//     currentNote: PropTypes.string.isRequired
+// }
 
 export default Folders
