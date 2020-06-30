@@ -133,7 +133,24 @@ class App extends React.Component{
       .then((result)=> {
         let newNotes=this.state.notes;
         newNotes.push(result);
-        this.setState({notes:newNotes,loading:false})
+        this.setState({
+          notes:newNotes,
+          loading:false,
+          noteFields: {
+            name: {
+              value: '',
+              touched: false,
+            },
+            content: {
+              value: '',
+              touched: false,
+            },
+            folderName: {
+              value: '',
+              touched: false,
+            }
+          }
+        })
       }
     )
     this.props.history.goBack();
@@ -161,7 +178,9 @@ class App extends React.Component{
     .then((result) => {
       let newFolders=this.state.folders
       newFolders.push(result)
-      this.setState({folders:newFolders})
+      this.setState({
+        folders:newFolders,
+        folderField: {value:'', touched:false}})
     })
     this.props.history.goBack();
 
