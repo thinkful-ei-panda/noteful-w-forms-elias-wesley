@@ -90,7 +90,7 @@ class App extends React.Component{
       let newNotes=this.state.notes
 
       //need != instead of !== because if the server has all its items deleted it starts making items with ids equal to integers instead of strings
-      newNotes=newNotes.filter(note => note.id !== Number(noteId))
+      newNotes=newNotes.filter(note => note.id != noteId)
       
 
       this.setState({
